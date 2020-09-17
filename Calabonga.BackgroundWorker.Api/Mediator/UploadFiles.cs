@@ -63,7 +63,7 @@ namespace Calabonga.BackgroundWorker.Api.Mediator
             var result = await _fileService.MergeAsync(files);
             if (!result.Ok)
             {
-                await _worker.AppendWorkCleanUploadsAsync();
+                //await _worker.AppendWorkCleanUploadsAsync();
             }
 
             return Unit.Value;
