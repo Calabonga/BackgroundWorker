@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Transactions;
-
 using Calabonga.BackgroundWorker.Api.Entities;
 using Calabonga.BackgroundWorker.Api.Web.Infrastructure.EventLogging;
 using Calabonga.UnitOfWork;
@@ -33,7 +31,9 @@ namespace Calabonga.BackgroundWorker.Api.Web.Infrastructure.Working
         {
             var work = new Work(WorkType.PriceCalculation)
             {
-                IsDeleteAfterSuccessfulCompleted = true
+                IsDeleteAfterSuccessfulCompleted = true,
+                Name = WorkType.PriceCalculation.ToString(),
+                CreatedAt = DateTime.UtcNow
             };
             var repository = UnitOfWork.GetRepository<Work>();
             await repository.InsertAsync(work, cancellationToken);
@@ -55,7 +55,9 @@ namespace Calabonga.BackgroundWorker.Api.Web.Infrastructure.Working
         {
             var work = new Work(WorkType.PriceGeneration)
             {
-                IsDeleteAfterSuccessfulCompleted = true
+                IsDeleteAfterSuccessfulCompleted = true,
+                Name = WorkType.PriceGeneration.ToString(),
+                CreatedAt = DateTime.UtcNow
             };
             var repository = UnitOfWork.GetRepository<Work>();
             await repository.InsertAsync(work, cancellationToken);
@@ -77,7 +79,9 @@ namespace Calabonga.BackgroundWorker.Api.Web.Infrastructure.Working
         {
             var work = new Work(WorkType.PriceSending)
             {
-                IsDeleteAfterSuccessfulCompleted = true
+                IsDeleteAfterSuccessfulCompleted = true,
+                Name = WorkType.PriceSending.ToString(),
+                CreatedAt = DateTime.UtcNow
             };
             var repository = UnitOfWork.GetRepository<Work>();
             await repository.InsertAsync(work, cancellationToken);
@@ -99,7 +103,9 @@ namespace Calabonga.BackgroundWorker.Api.Web.Infrastructure.Working
         {
             var work = new Work(WorkType.DownloadRates)
             {
-                IsDeleteAfterSuccessfulCompleted = true
+                IsDeleteAfterSuccessfulCompleted = true,
+                Name = WorkType.DownloadRates.ToString(),
+                CreatedAt = DateTime.UtcNow
             };
             var repository = UnitOfWork.GetRepository<Work>();
             await repository.InsertAsync(work, cancellationToken);

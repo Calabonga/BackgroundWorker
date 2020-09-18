@@ -40,7 +40,7 @@ namespace Calabonga.BackgroundWorker.Api.Entities
         /// <summary>
         /// Name of the work or process name which had starts this work
         /// </summary>
-        public string Name { get; } = null!;
+        public string Name { get; set; }
 
         /// <summary>
         ///  Calculation for delay interval is based on this parameters
@@ -70,7 +70,7 @@ namespace Calabonga.BackgroundWorker.Api.Entities
         /// <summary>
         /// Work created at
         /// </summary>
-        public DateTime CreatedAt { get; }
+        public DateTime CreatedAt { get; set; }
 
         /// <summary>
         /// Last processed
