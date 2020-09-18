@@ -1,4 +1,5 @@
 ﻿using Calabonga.BackgroundWorker.Api.Data.Base;
+using Calabonga.BackgroundWorker.Api.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace Calabonga.BackgroundWorker.Api.Data
@@ -13,9 +14,10 @@ namespace Calabonga.BackgroundWorker.Api.Data
 
         #region System
 
+        public DbSet<Work> Works { get; set; }
+        
         public DbSet<ApplicationUserProfile> Profiles { get; set; }
-
-        /// <inheritdoc />
+        
         public DbSet<MicroservicePermission> Permissions { get; set; }
 
         #endregion

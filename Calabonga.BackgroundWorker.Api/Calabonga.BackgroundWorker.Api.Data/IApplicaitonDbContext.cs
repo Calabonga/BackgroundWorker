@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Calabonga.BackgroundWorker.Api.Entities;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 
@@ -11,6 +12,8 @@ namespace Calabonga.BackgroundWorker.Api.Data
     {
         #region System
 
+        DbSet<Work> Works { get; set; }
+        
         DbSet<ApplicationUser> Users { get; set; }
 
         DbSet<ApplicationUserProfile> Profiles { get; set; }
