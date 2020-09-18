@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Threading;
-using System.Threading.Tasks;
-
-using Calabonga.AspNetCore.Controllers.Base;
+﻿using System.Threading.Tasks;
 using Calabonga.BackgroundWorker.Api.Web.Mediator.Catalog;
 using Calabonga.BackgroundWorker.Api.Web.ViewModels.CatalogViewModels;
 using Calabonga.OperationResultsCore;
@@ -30,7 +25,7 @@ namespace Calabonga.BackgroundWorker.Api.Web.Controllers
         }
 
         [HttpPost("[action]")]
-        public async Task<ActionResult<OperationResult<PriceUpdateResult>>> SavePriceById(PricesUpdateViewModel model)
+        public async Task<ActionResult<OperationResult<PriceUpdateResult>>> UpdateRates(PricesUpdateViewModel model)
         {
             return Ok(await _mediator.Send(new PriceUpdateRequest(model), HttpContext.RequestAborted));
         }

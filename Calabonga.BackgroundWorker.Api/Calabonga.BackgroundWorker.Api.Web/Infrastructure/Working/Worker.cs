@@ -1,5 +1,12 @@
-﻿using System.Threading.Tasks;
-
+﻿using System;
+using System.Diagnostics;
+using System.Linq;
+using System.Text.Json;
+using System.Threading;
+using System.Threading.Tasks;
+using Calabonga.BackgroundWorker.Api.Entities;
+using Calabonga.BackgroundWorker.Api.Web.Extensions;
+using Calabonga.BackgroundWorker.Api.Web.Infrastructure.EventLogging;
 using Calabonga.UnitOfWork;
 
 using Microsoft.Extensions.Logging;
@@ -22,10 +29,24 @@ namespace Calabonga.BackgroundWorker.Api.Web.Infrastructure.Working
         /// <summary>
         /// Appends work for worker and save it to database
         /// </summary>
+        /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public Task AppendWorkPriceCalculationAsync()
+        public async Task AppendWorkPriceCalculationAsync(CancellationToken cancellationToken)
         {
-            throw new System.NotImplementedException();
+            var work = new Work(WorkType.PriceCalculation);
+            var repository = UnitOfWork.GetRepository<Work>();
+            await repository.InsertAsync(work, cancellationToken);
+            await UnitOfWork.SaveChangesAsync();
+            if (!UnitOfWork.LastSaveChangesResult.IsOk)
+            {
+                Events.CreateWorkForWorker(Logger, WorkType.PriceCalculation.ToString(), null, UnitOfWork.LastSaveChangesResult.Exception);
+                var message = UnitOfWork.LastSaveChangesResult.Exception == null
+                    ? $"Cannot create work ({nameof(AppendWorkPriceCalculationAsync)})"
+                    : UnitOfWork.LastSaveChangesResult.Exception.Message;
+
+                return;
+            }
+            Events.CreateWorkForWorker(Logger, work.WorkType.ToString(), work.Id.ToString());
         }
     }
 }

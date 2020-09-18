@@ -44,7 +44,7 @@ namespace Calabonga.BackgroundWorker.Api.Web.Mediator.Catalog
             operation.AddSuccess("Catalog successfully updated");
 
             // append work for rates generation
-            await _worker.AppendWorkPriceCalculationAsync();
+            await _worker.AppendWorkPriceCalculationAsync(cancellationToken);
             operation.AppendLog("Worker job list updated");
 
             // return operation result

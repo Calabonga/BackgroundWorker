@@ -1,5 +1,5 @@
 ﻿using Calabonga.AspNetCore.Controllers.Extensions;
-
+using Calabonga.BackgroundWorker.Api.Web.Infrastructure.HostedServices;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Calabonga.BackgroundWorker.Api.Web.AppStart.ConfigureServices
@@ -16,6 +16,8 @@ namespace Calabonga.BackgroundWorker.Api.Web.AppStart.ConfigureServices
         public static void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+
+            // services.AddHostedService<EveryMinuteHostedService>();
 
             services.AddCommandAndQueries(typeof(Startup).Assembly);
         }

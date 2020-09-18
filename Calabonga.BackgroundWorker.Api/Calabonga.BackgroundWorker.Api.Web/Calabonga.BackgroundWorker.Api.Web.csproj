@@ -18,7 +18,6 @@
     <PackageReference Include="Calabonga.Microservices.BackgroundWorkers" Version="1.0.1" />
     <PackageReference Include="Calabonga.Microservices.Core" Version="2.1.2" />
     <PackageReference Include="Calabonga.Microservices.Web.Core" Version="2.0.2" />
-    <PackageReference Include="Calabonga.UnitOfWork.Controllers" Version="1.2.0" />
     <PackageReference Include="FluentValidation" Version="9.2.0" />
     <PackageReference Include="GitInfo" Version="2.0.34">
       <PrivateAssets>all</PrivateAssets>

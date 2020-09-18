@@ -1,7 +1,6 @@
 using Calabonga.BackgroundWorker.Api.Web.AppStart.Configures;
 using Calabonga.BackgroundWorker.Api.Web.AppStart.ConfigureServices;
 using Calabonga.BackgroundWorker.Api.Web.Infrastructure.DependencyInjection;
-using Calabonga.UnitOfWork.Controllers.DependencyContainer;
 
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -38,7 +37,6 @@ namespace Calabonga.BackgroundWorker.Api.Web
             ConfigureServicesControllers.ConfigureServices(services);
 
             DependencyContainer.Common(services);
-            NimbleDependencyContainer.ConfigureServices(services);
         }
         /// <summary>
         /// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
