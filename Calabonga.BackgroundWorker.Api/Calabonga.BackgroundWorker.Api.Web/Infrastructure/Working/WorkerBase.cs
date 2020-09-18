@@ -9,7 +9,6 @@ using Calabonga.BackgroundWorker.Api.Core;
 using Calabonga.BackgroundWorker.Api.Entities;
 using Calabonga.BackgroundWorker.Api.Web.Extensions;
 using Calabonga.BackgroundWorker.Api.Web.Infrastructure.EventLogging;
-using Calabonga.BackgroundWorker.Api.Web.Infrastructure.Helpers;
 using Calabonga.Microservices.Core.Exceptions;
 using Calabonga.UnitOfWork;
 using Microsoft.EntityFrameworkCore;
@@ -178,14 +177,14 @@ namespace Calabonga.BackgroundWorker.Api.Web.Infrastructure.Working
         /// <param name="exceptionMessage"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public async Task FinishWorkAsync(Guid workId, string exceptionMessage, CancellationToken cancellationToken)
+        public async Task FinishWorkAsync(CancellationToken cancellationToken, Guid workId, string? exceptionMessage = null)
         {
             if (string.IsNullOrEmpty(exceptionMessage))
             {
                 exceptionMessage = "Result message not provided";
             }
 
-            await FinishWorkAsync(workId, cancellationToken, new MicroserviceWorkerException(exceptionMessage));
+            await FinishWorkAsync(cancellationToken, workId, new MicroserviceWorkerException(exceptionMessage));
         }
 
         /// <summary>
@@ -195,7 +194,7 @@ namespace Calabonga.BackgroundWorker.Api.Web.Infrastructure.Working
         /// <param name="cancellationToken"></param>
         /// <param name="exception"></param>
         /// <returns></returns>
-        public async Task FinishWorkAsync(Guid workId, CancellationToken cancellationToken, Exception? exception = null)
+        public async Task FinishWorkAsync(CancellationToken cancellationToken, Guid workId, Exception exception)
         {
             var work = await UnitOfWork.GetRepository<Work>().FindAsync(workId);
             if (work == null)

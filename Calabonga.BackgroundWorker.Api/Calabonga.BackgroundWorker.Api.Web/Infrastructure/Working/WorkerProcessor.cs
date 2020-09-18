@@ -5,6 +5,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Calabonga.BackgroundWorker.Api.Entities;
 using Calabonga.BackgroundWorker.Api.Web.Infrastructure.EventLogging;
+using Calabonga.BackgroundWorker.Api.Web.Mediator.Catalog;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -112,17 +113,20 @@ namespace Calabonga.BackgroundWorker.Api.Web.Infrastructure.Working
 
         private async Task ProcessWorkPriceSendingAsync(IServiceScope scope, Guid workId, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            var mediator = scope.ServiceProvider.GetService<IMediator>();
+            await mediator.Send(new PriceSendRequest(workId), cancellationToken);
         }
 
         private async Task ProcessWorkPriceGenerationAsync(IServiceScope scope, Guid workId, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            var mediator = scope.ServiceProvider.GetService<IMediator>();
+            await mediator.Send(new PriceGenerateRequest(workId), cancellationToken);
         }
 
         private async Task ProcessWorkPriceCalculationAsync(IServiceScope scope, Guid workId, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            var mediator = scope.ServiceProvider.GetService<IMediator>();
+            await mediator.Send(new PriceCalculateRequest(workId), cancellationToken);
         }
 
         #endregion

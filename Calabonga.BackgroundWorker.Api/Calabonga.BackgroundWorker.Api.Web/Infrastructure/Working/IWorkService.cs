@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+
 using Calabonga.BackgroundWorker.Api.Entities;
 
 namespace Calabonga.BackgroundWorker.Api.Web.Infrastructure.Working
@@ -43,7 +44,16 @@ namespace Calabonga.BackgroundWorker.Api.Web.Infrastructure.Working
         /// <param name="cancellationToken"></param>
         /// <param name="exception"></param>
         /// <returns></returns>
-        Task FinishWorkAsync(Guid workId, CancellationToken cancellationToken, Exception? exception = null);
+        Task FinishWorkAsync(CancellationToken cancellationToken, Guid workId, Exception exception);
+
+        /// <summary>
+        /// Updates ProcessingResult property for Work by Id. Update processing time. Does not complete work execution
+        /// </summary>
+        /// <param name="workId"></param>
+        /// <param name="exceptionMessage"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        Task FinishWorkAsync(CancellationToken cancellationToken, Guid workId, string? exceptionMessage = null);
 
         /// <summary>
         /// Restart work 
@@ -54,15 +64,6 @@ namespace Calabonga.BackgroundWorker.Api.Web.Infrastructure.Working
         /// <param name="retryCount"></param>
         /// <returns></returns>
         Task RestartWorkAsync(Guid workId, string reason, int restartAfterMinutes = 15, int retryCount = 1);
-
-        /// <summary>
-        /// Updates ProcessingResult property for Work by Id. Update processing time. Does not complete work execution
-        /// </summary>
-        /// <param name="workId"></param>
-        /// <param name="exceptionMessage"></param>
-        /// <param name="cancellationToken"></param>
-        /// <returns></returns>
-        Task FinishWorkAsync(Guid workId, string exceptionMessage, CancellationToken cancellationToken);
 
         /// <summary>
         /// Returns UserName for work (creator name)
