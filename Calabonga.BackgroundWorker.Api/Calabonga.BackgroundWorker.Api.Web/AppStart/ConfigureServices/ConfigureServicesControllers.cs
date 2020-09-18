@@ -18,6 +18,7 @@ namespace Calabonga.BackgroundWorker.Api.Web.AppStart.ConfigureServices
             services.AddControllers();
 
             services.AddHostedService<EveryMinuteHostedService>();
+            services.AddHostedService<RateUpdateHostedService>();
 
             services.AddCommandAndQueries(typeof(Startup).Assembly);
         }

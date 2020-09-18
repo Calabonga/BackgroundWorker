@@ -10,22 +10,22 @@ using Microsoft.Extensions.Logging;
 
 namespace Calabonga.BackgroundWorker.Api.Web.Infrastructure.HostedServices
 {
-    public class RateUpdateHostedService : CrontabScheduledBackgroundHostedService
+    public class EveryMinuteHostedService : CrontabScheduledBackgroundHostedService
     {
-        public RateUpdateHostedService(IServiceScopeFactory serviceScopeFactory, ILogger<RateUpdateHostedService> logger) 
+        public EveryMinuteHostedService(IServiceScopeFactory serviceScopeFactory, ILogger<EveryMinuteHostedService> logger) 
             : base(serviceScopeFactory, logger)
         {
         }
 
         protected override Task ProcessInScopeAsync(IServiceProvider serviceProvider, CancellationToken token)
         {
-            var worker = serviceProvider.GetRequiredService<IWorker>();
-            return worker.AppendWorkDownloadRatesAsync(serviceProvider, token);
+            var workProcessor = serviceProvider.GetRequiredService<IWorkerProcessor>();
+            return workProcessor.ProcessActiveWorksAsync(serviceProvider, token);
         }
 
-        protected override string Schedule => "0 */12 * * 1-5";
+        protected override string Schedule => "* * * * *";
 
-        protected override string DisplayName => "At minute 0 past every 12th hour on every day-of-week from Monday through Friday.";
+        protected override string DisplayName => "EveryMinutes hosted service";
 
         protected override bool IsExecuteOnServerRestart => false;
     }

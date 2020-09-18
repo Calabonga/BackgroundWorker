@@ -34,9 +34,8 @@ namespace Calabonga.BackgroundWorker.Api.Web.Infrastructure.Working
         /// <summary>
         /// Append work for getting new rates from the Bank od Russia
         /// </summary>
-        /// <param name="serviceProvider"></param>
         /// <param name="token"></param>
         /// <returns></returns>
-        Task AppendWorkDownloadRatesAsync(IServiceProvider serviceProvider, CancellationToken token);
+        Task AppendWorkDownloadRatesAsync(CancellationToken token);
     }
 }

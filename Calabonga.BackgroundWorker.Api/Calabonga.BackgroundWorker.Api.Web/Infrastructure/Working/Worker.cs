@@ -2,6 +2,7 @@
 using System.Threading;
 using System.Threading.Tasks;
 using System.Transactions;
+
 using Calabonga.BackgroundWorker.Api.Entities;
 using Calabonga.BackgroundWorker.Api.Web.Infrastructure.EventLogging;
 using Calabonga.UnitOfWork;
@@ -30,7 +31,10 @@ namespace Calabonga.BackgroundWorker.Api.Web.Infrastructure.Working
         /// <returns></returns>
         public async Task AppendWorkPriceCalculationAsync(CancellationToken cancellationToken)
         {
-            var work = new Work(WorkType.PriceCalculation) {IsDeleteAfterSuccessfulCompleted = true};
+            var work = new Work(WorkType.PriceCalculation)
+            {
+                IsDeleteAfterSuccessfulCompleted = true
+            };
             var repository = UnitOfWork.GetRepository<Work>();
             await repository.InsertAsync(work, cancellationToken);
             await UnitOfWork.SaveChangesAsync();
@@ -49,7 +53,10 @@ namespace Calabonga.BackgroundWorker.Api.Web.Infrastructure.Working
         /// <returns></returns>
         public async Task AppendWorkPriceGenerationAsync(CancellationToken cancellationToken)
         {
-            var work = new Work(WorkType.PriceGeneration) {IsDeleteAfterSuccessfulCompleted = true};
+            var work = new Work(WorkType.PriceGeneration)
+            {
+                IsDeleteAfterSuccessfulCompleted = true
+            };
             var repository = UnitOfWork.GetRepository<Work>();
             await repository.InsertAsync(work, cancellationToken);
             await UnitOfWork.SaveChangesAsync();
@@ -68,7 +75,10 @@ namespace Calabonga.BackgroundWorker.Api.Web.Infrastructure.Working
         /// <returns></returns>
         public async Task AppendWorkPriceSendingAsync(CancellationToken cancellationToken)
         {
-            var work = new Work(WorkType.PriceSending) {IsDeleteAfterSuccessfulCompleted = true};
+            var work = new Work(WorkType.PriceSending)
+            {
+                IsDeleteAfterSuccessfulCompleted = true
+            };
             var repository = UnitOfWork.GetRepository<Work>();
             await repository.InsertAsync(work, cancellationToken);
             await UnitOfWork.SaveChangesAsync();
@@ -83,12 +93,14 @@ namespace Calabonga.BackgroundWorker.Api.Web.Infrastructure.Working
         /// <summary>
         /// Append work for getting new rates from the Bank od Russia
         /// </summary>
-        /// <param name="serviceProvider"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public async Task AppendWorkDownloadRatesAsync(IServiceProvider serviceProvider, CancellationToken cancellationToken)
+        public async Task AppendWorkDownloadRatesAsync(CancellationToken cancellationToken)
         {
-            var work = new Work(WorkType.DownloadRates) {IsDeleteAfterSuccessfulCompleted = true};
+            var work = new Work(WorkType.DownloadRates)
+            {
+                IsDeleteAfterSuccessfulCompleted = true
+            };
             var repository = UnitOfWork.GetRepository<Work>();
             await repository.InsertAsync(work, cancellationToken);
             await UnitOfWork.SaveChangesAsync();
