@@ -1,4 +1,5 @@
-﻿using System.Threading;
+﻿using System;
+using System.Threading;
 using System.Threading.Tasks;
 using Calabonga.BackgroundWorker.Api.Entities;
 
@@ -29,5 +30,13 @@ namespace Calabonga.BackgroundWorker.Api.Web.Infrastructure.Working
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
         Task AppendWorkPriceSendingAsync(CancellationToken cancellationToken);
+
+        /// <summary>
+        /// Append work for getting new rates from the Bank od Russia
+        /// </summary>
+        /// <param name="serviceProvider"></param>
+        /// <param name="token"></param>
+        /// <returns></returns>
+        Task AppendWorkDownloadRatesAsync(IServiceProvider serviceProvider, CancellationToken token);
     }
 }

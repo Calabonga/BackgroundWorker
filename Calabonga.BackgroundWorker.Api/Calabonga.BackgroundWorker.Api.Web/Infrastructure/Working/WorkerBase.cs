@@ -5,12 +5,14 @@ using System.Linq.Dynamic.Core;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+
 using Calabonga.BackgroundWorker.Api.Core;
 using Calabonga.BackgroundWorker.Api.Entities;
 using Calabonga.BackgroundWorker.Api.Web.Extensions;
 using Calabonga.BackgroundWorker.Api.Web.Infrastructure.EventLogging;
 using Calabonga.Microservices.Core.Exceptions;
 using Calabonga.UnitOfWork;
+
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
@@ -45,11 +47,12 @@ namespace Calabonga.BackgroundWorker.Api.Web.Infrastructure.Working
         /// Returns uncompleted works for processing
         /// </summary>
         /// <returns></returns>
-        public IEnumerable<Work> GetRootWorks()
+        public IEnumerable<Work>GetRootWorks()
         {
             return UnitOfWork.GetRepository<Work>()
                 .GetAll()
                 .AsNoTracking()
+                .ToList()
                 .OrderBy(x => x.CreatedAt)
                 .Where(x => x.CompletedAt == null && x.CanceledAt == null && x.ParentId == null && string.IsNullOrEmpty(x.Dependency));
         }
@@ -63,6 +66,7 @@ namespace Calabonga.BackgroundWorker.Api.Web.Infrastructure.Working
             var worksWithDependencies = UnitOfWork.GetRepository<Work>()
                 .GetAll()
                 .AsNoTracking()
+                .ToList()
                 .OrderBy(x => x.CreatedAt)
                 .Where(x => x.CompletedAt == null && x.CanceledAt == null && !string.IsNullOrEmpty(x.Dependency))
                 .ToList();
@@ -102,6 +106,7 @@ namespace Calabonga.BackgroundWorker.Api.Web.Infrastructure.Working
                 .GetAll()
                 .AsNoTracking()
                 .Include(x => x.Parent)
+                .ToList()
                 .OrderBy(x => x.CreatedAt)
                 .Where(x => x.CompletedAt == null && x.CanceledAt == null && x.ParentId != null && x.Parent!.CompletedAt != null && string.IsNullOrEmpty(x.Dependency))
                 .ToList();
@@ -171,32 +176,39 @@ namespace Calabonga.BackgroundWorker.Api.Web.Infrastructure.Working
         }
 
         /// <summary>
-        /// Updates ProcessingResult property for Work by Id
+        /// Complete work successfully
         /// </summary>
-        /// <param name="workId"></param>
-        /// <param name="exceptionMessage"></param>
         /// <param name="cancellationToken"></param>
+        /// <param name="workId"></param>
+        /// <param name="message"></param>
         /// <returns></returns>
-        public async Task FinishWorkAsync(CancellationToken cancellationToken, Guid workId, string? exceptionMessage = null)
+        public async Task CompleteWorkAsync(CancellationToken cancellationToken, Guid workId, string message)
         {
-            if (string.IsNullOrEmpty(exceptionMessage))
-            {
-                exceptionMessage = "Result message not provided";
-            }
-
-            await FinishWorkAsync(cancellationToken, workId, new MicroserviceWorkerException(exceptionMessage));
+            await UpdateWorkAsync(cancellationToken, workId, null);
         }
 
         /// <summary>
         /// Finish the Work according to Work settings
         /// </summary>
-        /// <param name="workId"></param>
         /// <param name="cancellationToken"></param>
+        /// <param name="workId"></param>
         /// <param name="exception"></param>
         /// <returns></returns>
-        public async Task FinishWorkAsync(CancellationToken cancellationToken, Guid workId, Exception exception)
+        public async Task WorkFailedAsync(CancellationToken cancellationToken, Guid workId, Exception? exception)
         {
-            var work = await UnitOfWork.GetRepository<Work>().FindAsync(workId);
+            await UpdateWorkAsync(cancellationToken, workId, exception);
+        }
+
+        /// <summary>
+        /// Finish the Work according to Work settings
+        /// </summary>
+        /// <param name="cancellationToken"></param>
+        /// <param name="workId"></param>
+        /// <param name="exception"></param>
+        /// <returns></returns>
+        private async Task UpdateWorkAsync(CancellationToken cancellationToken, Guid workId, Exception? exception)
+        {
+            var work = await UnitOfWork.GetRepository<Work>().GetAll().SingleOrDefaultAsync(x=>x.Id == workId, cancellationToken);
             if (work == null)
             {
                 Events.WorkByIdNotFound(Logger, workId.ToString(), new MicroserviceNotFoundException($"Work {workId} not found"));
@@ -207,7 +219,7 @@ namespace Calabonga.BackgroundWorker.Api.Web.Infrastructure.Working
             {
                 WorkerQueue.Instance.Remove(work.Id);
                 work.CanceledAt = DateTime.UtcNow;
-                work.ProcessingResult = JsonSerializer.Serialize(exception, new JsonSerializerOptions {IgnoreNullValues = true});
+                work.ProcessingResult = JsonSerializer.Serialize(exception, new JsonSerializerOptions { IgnoreNullValues = true });
                 work.MarkAsProcessed();
                 var repository = UnitOfWork.GetRepository<Work>();
                 repository.Update(work);
@@ -236,6 +248,7 @@ namespace Calabonga.BackgroundWorker.Api.Web.Infrastructure.Working
 
             await UnitOfWork.SaveChangesAsync();
             WorkerQueue.Instance.Remove(work.Id);
+            Events.WorkCompleted(Logger, workId.ToString());
             if (!UnitOfWork.LastSaveChangesResult.IsOk)
             {
                 var exceptionSave = UnitOfWork.LastSaveChangesResult?.Exception ?? new MicroserviceInvalidCastException("UnitOfWork.LastSaveChangesResult failed");

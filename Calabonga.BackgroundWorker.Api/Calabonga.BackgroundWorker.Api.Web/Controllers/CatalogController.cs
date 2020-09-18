@@ -27,7 +27,7 @@ namespace Calabonga.BackgroundWorker.Api.Web.Controllers
         [HttpPost("[action]")]
         public async Task<ActionResult<OperationResult<PriceUpdateResult>>> UpdateRates(PricesUpdateViewModel model)
         {
-            return Ok(await _mediator.Send(new PriceUpdateRequest(model), HttpContext.RequestAborted));
+            return Ok(await _mediator.Send(new RatesUpdateRequest(model), HttpContext.RequestAborted));
         }
     }
 }

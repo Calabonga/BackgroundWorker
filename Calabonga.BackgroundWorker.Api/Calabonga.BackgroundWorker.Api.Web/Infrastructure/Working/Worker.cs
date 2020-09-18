@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Transactions;
 using Calabonga.BackgroundWorker.Api.Entities;
 using Calabonga.BackgroundWorker.Api.Web.Infrastructure.EventLogging;
 using Calabonga.UnitOfWork;
@@ -29,17 +30,13 @@ namespace Calabonga.BackgroundWorker.Api.Web.Infrastructure.Working
         /// <returns></returns>
         public async Task AppendWorkPriceCalculationAsync(CancellationToken cancellationToken)
         {
-            var work = new Work(WorkType.PriceCalculation);
+            var work = new Work(WorkType.PriceCalculation) {IsDeleteAfterSuccessfulCompleted = true};
             var repository = UnitOfWork.GetRepository<Work>();
             await repository.InsertAsync(work, cancellationToken);
             await UnitOfWork.SaveChangesAsync();
             if (!UnitOfWork.LastSaveChangesResult.IsOk)
             {
-                Events.CreateWorkForWorker(Logger, WorkType.PriceCalculation.ToString(), null, UnitOfWork.LastSaveChangesResult.Exception);
-                var message = UnitOfWork.LastSaveChangesResult.Exception == null
-                    ? $"Cannot create work ({nameof(AppendWorkPriceCalculationAsync)})"
-                    : UnitOfWork.LastSaveChangesResult.Exception.Message;
-
+                Events.CreateWorkForWorker(Logger, WorkType.PriceCalculation.ToString(), string.Empty, UnitOfWork.LastSaveChangesResult.Exception);
                 return;
             }
             Events.CreateWorkForWorker(Logger, work.WorkType.ToString(), work.Id.ToString());
@@ -52,17 +49,13 @@ namespace Calabonga.BackgroundWorker.Api.Web.Infrastructure.Working
         /// <returns></returns>
         public async Task AppendWorkPriceGenerationAsync(CancellationToken cancellationToken)
         {
-            var work = new Work(WorkType.PriceGeneration);
+            var work = new Work(WorkType.PriceGeneration) {IsDeleteAfterSuccessfulCompleted = true};
             var repository = UnitOfWork.GetRepository<Work>();
             await repository.InsertAsync(work, cancellationToken);
             await UnitOfWork.SaveChangesAsync();
             if (!UnitOfWork.LastSaveChangesResult.IsOk)
             {
-                Events.CreateWorkForWorker(Logger, WorkType.PriceGeneration.ToString(), null, UnitOfWork.LastSaveChangesResult.Exception);
-                var message = UnitOfWork.LastSaveChangesResult.Exception == null
-                    ? $"Cannot create work ({nameof(AppendWorkPriceCalculationAsync)})"
-                    : UnitOfWork.LastSaveChangesResult.Exception.Message;
-
+                Events.CreateWorkForWorker(Logger, WorkType.PriceGeneration.ToString(), string.Empty, UnitOfWork.LastSaveChangesResult.Exception);
                 return;
             }
             Events.CreateWorkForWorker(Logger, work.WorkType.ToString(), work.Id.ToString());
@@ -75,17 +68,33 @@ namespace Calabonga.BackgroundWorker.Api.Web.Infrastructure.Working
         /// <returns></returns>
         public async Task AppendWorkPriceSendingAsync(CancellationToken cancellationToken)
         {
-            var work = new Work(WorkType.PriceSending);
+            var work = new Work(WorkType.PriceSending) {IsDeleteAfterSuccessfulCompleted = true};
             var repository = UnitOfWork.GetRepository<Work>();
             await repository.InsertAsync(work, cancellationToken);
             await UnitOfWork.SaveChangesAsync();
             if (!UnitOfWork.LastSaveChangesResult.IsOk)
             {
-                Events.CreateWorkForWorker(Logger, WorkType.PriceSending.ToString(), null, UnitOfWork.LastSaveChangesResult.Exception);
-                var message = UnitOfWork.LastSaveChangesResult.Exception == null
-                    ? $"Cannot create work ({nameof(AppendWorkPriceCalculationAsync)})"
-                    : UnitOfWork.LastSaveChangesResult.Exception.Message;
+                Events.CreateWorkForWorker(Logger, WorkType.PriceSending.ToString(), string.Empty, UnitOfWork.LastSaveChangesResult.Exception);
+                return;
+            }
+            Events.CreateWorkForWorker(Logger, work.WorkType.ToString(), work.Id.ToString());
+        }
 
+        /// <summary>
+        /// Append work for getting new rates from the Bank od Russia
+        /// </summary>
+        /// <param name="serviceProvider"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        public async Task AppendWorkDownloadRatesAsync(IServiceProvider serviceProvider, CancellationToken cancellationToken)
+        {
+            var work = new Work(WorkType.DownloadRates) {IsDeleteAfterSuccessfulCompleted = true};
+            var repository = UnitOfWork.GetRepository<Work>();
+            await repository.InsertAsync(work, cancellationToken);
+            await UnitOfWork.SaveChangesAsync();
+            if (!UnitOfWork.LastSaveChangesResult.IsOk)
+            {
+                Events.CreateWorkForWorker(Logger, WorkType.PriceSending.ToString(), string.Empty, UnitOfWork.LastSaveChangesResult.Exception);
                 return;
             }
             Events.CreateWorkForWorker(Logger, work.WorkType.ToString(), work.Id.ToString());

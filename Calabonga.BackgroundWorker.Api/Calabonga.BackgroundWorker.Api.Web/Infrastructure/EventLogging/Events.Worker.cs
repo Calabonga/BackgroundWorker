@@ -1,4 +1,7 @@
 ﻿using System;
+
+using Calabonga.BackgroundWorker.Api.Web.Infrastructure.Working;
+
 using Microsoft.Extensions.Logging;
 
 namespace Calabonga.BackgroundWorker.Api.Web.Infrastructure.EventLogging
@@ -9,15 +12,18 @@ namespace Calabonga.BackgroundWorker.Api.Web.Infrastructure.EventLogging
     static partial class Events
     {
         #region SaveChangesFailed
+
         private static readonly Action<ILogger, Exception?> SaveChangesFailedExecute =
             LoggerMessage.Define(
                 LogLevel.Critical,
                 EventIdHelper.SaveChangesFailedId,
                 "Saving to database error");
 
-        public static void SaveChangesFailed(ILogger logger, Exception exception) => SaveChangesFailedExecute(logger, exception);
+        public static void SaveChangesFailed(ILogger logger, Exception exception) =>
+            SaveChangesFailedExecute(logger, exception);
+
         #endregion
-        
+
         #region TotalWorksFoundForWorker
 
         private static readonly Action<ILogger, int, Exception?> TotalWorksFoundForWorkerExecute =
@@ -78,19 +84,6 @@ namespace Calabonga.BackgroundWorker.Api.Web.Infrastructure.EventLogging
             {
                 WorkerStartWorkProcessingExecute(logger, null!);
             }
-        }
-
-        #endregion
-
-        #region StoppingReplanning
-
-        private static readonly Action<ILogger, Exception?> StoppingReplanningExecute =
-            LoggerMessage.Define(LogLevel.Information, EventIdHelper.StoppingReplanningId,
-                "[SCHEDULER] Stopping replanning");
-
-        public static void StoppingReplanning(ILogger logger, Exception? exception = null)
-        {
-            StoppingReplanningExecute(logger, exception);
         }
 
         #endregion
@@ -195,7 +188,7 @@ namespace Calabonga.BackgroundWorker.Api.Web.Infrastructure.EventLogging
             LoggerMessage.Define<string, string>(
                 LogLevel.Information,
                 EventIdHelper.CreateWorkForWorkerId,
-                "New work with of type {WorkType} with id {Id} for Worker created");
+                "Work of type {WorkType} with ID [{Id}] successfully created");
 
         public static void CreateWorkForWorker(ILogger logger, string workType, string id, Exception? exception = null)
         {
@@ -225,5 +218,23 @@ namespace Calabonga.BackgroundWorker.Api.Web.Infrastructure.EventLogging
 
         #endregion
 
+        #region WorkCompleted
+
+        private static readonly Action<ILogger, string, Exception?> WorkCompletedExecute =
+            LoggerMessage.Define<string>(
+                LogLevel.Information,
+                EventIdHelper.WorkCompletedId,
+                "Work {WorkId} completed!");
+
+        public static void WorkCompleted(ILogger logger, string workId)
+        {
+            if (logger.IsEnabled(LogLevel.Debug))
+            {
+                WorkCompletedExecute(logger, workId, null!);
+            }
+        }
+
+        #endregion
     }
+
 }

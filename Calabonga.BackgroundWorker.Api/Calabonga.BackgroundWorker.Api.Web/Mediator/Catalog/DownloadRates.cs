@@ -9,11 +9,11 @@ using MediatR;
 namespace Calabonga.BackgroundWorker.Api.Web.Mediator.Catalog
 {
     /// <summary>
-    /// Request: calculate and update prices to customer
+    /// Request: send prices to customer
     /// </summary>
-    public class PriceCalculateRequest : RequestBase<Unit>
+    public class DownloadRatesRequest : RequestBase<Unit>
     {
-        public PriceCalculateRequest(Guid workId)
+        public DownloadRatesRequest(Guid workId)
         {
             WorkId = workId;
         }
@@ -22,17 +22,17 @@ namespace Calabonga.BackgroundWorker.Api.Web.Mediator.Catalog
     }
 
     /// <summary>
-    /// Handler: calculate and update prices to customer
+    /// Handler: send prices to customer
     /// </summary>
-    public class PriceCalculateRequestHandler : IRequestHandler<PriceCalculateRequest, Unit>
+    public class DownloadRatesRequestHandler : IRequestHandler<DownloadRatesRequest, Unit>
     {
         private readonly IWorkService _workService;
         private readonly IWorker _worker;
         private readonly IUnitOfWork _unitOfWork;
 
-        public PriceCalculateRequestHandler(
+        public DownloadRatesRequestHandler(
             IWorkService workService,
-        IWorker worker, 
+            IWorker worker, 
             IUnitOfWork unitOfWork)
         {
             _workService = workService;
@@ -40,13 +40,14 @@ namespace Calabonga.BackgroundWorker.Api.Web.Mediator.Catalog
             _unitOfWork = unitOfWork;
         }
 
+
         /// <summary>Handles a request</summary>
         /// <param name="request">The request</param>
         /// <param name="cancellationToken">Cancellation token</param>
         /// <returns>Response from the request</returns>
-        public async Task<Unit> Handle(PriceCalculateRequest request, CancellationToken cancellationToken)
+        public async Task<Unit> Handle(DownloadRatesRequest request, CancellationToken cancellationToken)
         {
-            // Some operations with entities
+            // Some operations with IEmailService and IProfileService
             // Update database with new rates
             // using UnitOfWork instance (_unitOfWork)
 
@@ -65,10 +66,10 @@ namespace Calabonga.BackgroundWorker.Api.Web.Mediator.Catalog
             // }
 
             // Finishing the work
-            await _workService.CompleteWorkAsync(cancellationToken, request.WorkId, "price generation completed");
+            await _workService.CompleteWorkAsync(cancellationToken, request.WorkId, "Updated from Bank of Russia");
 
-            // and append new work for price generation
-            await _worker.AppendWorkPriceGenerationAsync(cancellationToken);
+            // append work for rates generation
+            await _worker.AppendWorkPriceCalculationAsync(cancellationToken);
 
             // return
             return Unit.Value;

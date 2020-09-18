@@ -13,9 +13,9 @@ namespace Calabonga.BackgroundWorker.Api.Web.Mediator.Catalog
     /// <summary>
     /// Request: rates updating
     /// </summary>
-    public class PriceUpdateRequest : RequestBase<OperationResult<PriceUpdateResult>>
+    public class RatesUpdateRequest : RequestBase<OperationResult<PriceUpdateResult>>
     {
-        public PriceUpdateRequest(PricesUpdateViewModel rates)
+        public RatesUpdateRequest(PricesUpdateViewModel rates)
         {
             Rates = rates;
         }
@@ -26,18 +26,18 @@ namespace Calabonga.BackgroundWorker.Api.Web.Mediator.Catalog
     /// <summary>
     /// Handler: rates updating
     /// </summary>
-    public class PriceUpdateRequestHandler : OperationResultRequestHandlerBase<PriceUpdateRequest, PriceUpdateResult>
+    public class RatesUpdateRequestHandler : OperationResultRequestHandlerBase<RatesUpdateRequest, PriceUpdateResult>
     {
         private readonly IWorker _worker;
         private readonly IUnitOfWork _unitOfWork;
 
-        public PriceUpdateRequestHandler(IWorker worker, IUnitOfWork unitOfWork)
+        public RatesUpdateRequestHandler(IWorker worker, IUnitOfWork unitOfWork)
         {
             _worker = worker;
             _unitOfWork = unitOfWork;
         }
 
-        public override async Task<OperationResult<PriceUpdateResult>> Handle(PriceUpdateRequest request, CancellationToken cancellationToken)
+        public override async Task<OperationResult<PriceUpdateResult>> Handle(RatesUpdateRequest updateRequest, CancellationToken cancellationToken)
         {
             var operation = OperationResult.CreateResult<PriceUpdateResult>();
 

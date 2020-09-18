@@ -56,7 +56,7 @@ namespace Calabonga.BackgroundWorker.Api.Web.Mediator.Catalog
             // await _unitOfWork.SaveChangesAsync();
             // if (!_unitOfWork.LastSaveChangesResult.IsOk)
             // {
-            //     await _workService.FinishWorkAsync(cancellationToken, request.WorkId, _unitOfWork.LastSaveChangesResult.Exception);
+            //     await _workService.WorkFailedAsync(cancellationToken, request.WorkId, _unitOfWork.LastSaveChangesResult.Exception);
             //     return Unit.Value;
             
             //     // ---------------- OR --------------------------
@@ -66,7 +66,7 @@ namespace Calabonga.BackgroundWorker.Api.Web.Mediator.Catalog
             // }
 
             // Finishing the work
-            await _workService.FinishWorkAsync(cancellationToken, request.WorkId);
+            await _workService.CompleteWorkAsync(cancellationToken, request.WorkId, "13202395 email sent");
 
             // return
             return Unit.Value;

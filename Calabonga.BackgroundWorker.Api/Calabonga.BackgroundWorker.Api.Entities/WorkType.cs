@@ -24,6 +24,11 @@
         /// <summary>
         /// Send file to customer
         /// </summary>
-        PriceSending
+        PriceSending,
+
+        /// <summary>
+        /// Downloads rates from the Bank of Russia
+        /// </summary>
+        DownloadRates
     }
 }

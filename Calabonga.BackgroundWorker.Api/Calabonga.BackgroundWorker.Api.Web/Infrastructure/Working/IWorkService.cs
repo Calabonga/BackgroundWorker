@@ -40,20 +40,20 @@ namespace Calabonga.BackgroundWorker.Api.Web.Infrastructure.Working
         /// <summary>
         /// Finish the Work according to Work settings
         /// </summary>
-        /// <param name="workId"></param>
         /// <param name="cancellationToken"></param>
+        /// <param name="workId"></param>
         /// <param name="exception"></param>
         /// <returns></returns>
-        Task FinishWorkAsync(CancellationToken cancellationToken, Guid workId, Exception exception);
+        Task WorkFailedAsync(CancellationToken cancellationToken, Guid workId, Exception? exception = null);
 
         /// <summary>
-        /// Updates ProcessingResult property for Work by Id. Update processing time. Does not complete work execution
+        /// Complete work successfully
         /// </summary>
-        /// <param name="workId"></param>
-        /// <param name="exceptionMessage"></param>
         /// <param name="cancellationToken"></param>
+        /// <param name="workId"></param>
+        /// <param name="message"></param>
         /// <returns></returns>
-        Task FinishWorkAsync(CancellationToken cancellationToken, Guid workId, string? exceptionMessage = null);
+        Task CompleteWorkAsync(CancellationToken cancellationToken, Guid workId, string message);
 
         /// <summary>
         /// Restart work 

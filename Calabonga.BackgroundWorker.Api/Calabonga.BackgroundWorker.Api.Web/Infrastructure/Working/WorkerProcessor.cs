@@ -102,6 +102,10 @@ namespace Calabonga.BackgroundWorker.Api.Web.Infrastructure.Working
                     
                     case WorkType.PriceSending:
                         await ProcessWorkPriceSendingAsync(scope, work.Id, cancellationToken);
+                        break; 
+                    
+                    case WorkType.DownloadRates:
+                        await ProcessWorkDownloadRatesAsync(scope, work.Id, cancellationToken);
                         break;
                         
                     default:
@@ -109,6 +113,12 @@ namespace Calabonga.BackgroundWorker.Api.Web.Infrastructure.Working
                         break;
                 }
             }
+        }
+
+        private async Task ProcessWorkDownloadRatesAsync(IServiceScope scope, Guid workId, CancellationToken cancellationToken)
+        {
+            var mediator = scope.ServiceProvider.GetService<IMediator>();
+            await mediator.Send(new DownloadRatesRequest(workId), cancellationToken);
         }
 
         private async Task ProcessWorkPriceSendingAsync(IServiceScope scope, Guid workId, CancellationToken cancellationToken)

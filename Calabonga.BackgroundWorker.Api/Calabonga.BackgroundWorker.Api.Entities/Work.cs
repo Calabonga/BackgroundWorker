@@ -91,7 +91,7 @@ namespace Calabonga.BackgroundWorker.Api.Entities
         /// Indicates that the item should be deleted after successful completion.
         /// By default, all works created as works that need to delete after it has been completed
         /// </summary>
-        public bool IsDeleteAfterSuccessfulCompleted { get; }
+        public bool IsDeleteAfterSuccessfulCompleted { get; set; }
 
         /// <summary>
         /// Stores result of execution. Exceptions or other messages
