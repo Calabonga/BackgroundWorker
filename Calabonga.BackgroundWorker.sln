@@ -1,6 +1,15 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Calabonga.BackgroundWorker.Api", "Calabonga.BackgroundWorker.Api\Calabonga.BackgroundWorker.Api.csproj", "{9B8BFD14-D74F-45C2-B509-AF1B8F806623}"
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30503.244
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Calabonga.BackgroundWorker.Api.Web", "Calabonga.BackgroundWorker.Api\Calabonga.BackgroundWorker.Api.Web\Calabonga.BackgroundWorker.Api.Web.csproj", "{8C80BB19-A64E-48DE-9405-55DE58C65B45}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Calabonga.BackgroundWorker.Api.Data", "Calabonga.BackgroundWorker.Api\Calabonga.BackgroundWorker.Api.Data\Calabonga.BackgroundWorker.Api.Data.csproj", "{47680ABE-420D-46AF-AE67-68938186CEDF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Calabonga.BackgroundWorker.Api.Entities", "Calabonga.BackgroundWorker.Api\Calabonga.BackgroundWorker.Api.Entities\Calabonga.BackgroundWorker.Api.Entities.csproj", "{20A59505-33CF-4BF9-A427-46EDE15A0498}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Calabonga.BackgroundWorker.Api.Core", "Calabonga.BackgroundWorker.Api\Calabonga.BackgroundWorker.Api.Core\Calabonga.BackgroundWorker.Api.Core.csproj", "{23AB0735-F17F-446C-82BA-14997A29860D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -8,9 +17,27 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{9B8BFD14-D74F-45C2-B509-AF1B8F806623}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{9B8BFD14-D74F-45C2-B509-AF1B8F806623}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{9B8BFD14-D74F-45C2-B509-AF1B8F806623}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{9B8BFD14-D74F-45C2-B509-AF1B8F806623}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8C80BB19-A64E-48DE-9405-55DE58C65B45}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8C80BB19-A64E-48DE-9405-55DE58C65B45}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8C80BB19-A64E-48DE-9405-55DE58C65B45}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8C80BB19-A64E-48DE-9405-55DE58C65B45}.Release|Any CPU.Build.0 = Release|Any CPU
+		{47680ABE-420D-46AF-AE67-68938186CEDF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{47680ABE-420D-46AF-AE67-68938186CEDF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{47680ABE-420D-46AF-AE67-68938186CEDF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{47680ABE-420D-46AF-AE67-68938186CEDF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{20A59505-33CF-4BF9-A427-46EDE15A0498}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{20A59505-33CF-4BF9-A427-46EDE15A0498}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{20A59505-33CF-4BF9-A427-46EDE15A0498}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{20A59505-33CF-4BF9-A427-46EDE15A0498}.Release|Any CPU.Build.0 = Release|Any CPU
+		{23AB0735-F17F-446C-82BA-14997A29860D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{23AB0735-F17F-446C-82BA-14997A29860D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{23AB0735-F17F-446C-82BA-14997A29860D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{23AB0735-F17F-446C-82BA-14997A29860D}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {FC7EDCC6-E552-4C7B-90E5-477D381AD6EF}
 	EndGlobalSection
 EndGlobal

@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Calabonga.AspNetCore.Controllers" Version="1.1.0" />
+    <PackageReference Include="Calabonga.EntityFrameworkCore.Entities.Base" Version="2.1.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Calabonga.BackgroundWorker.Api.Core\Calabonga.BackgroundWorker.Api.Core.csproj" />
+  </ItemGroup>
+
+</Project>
