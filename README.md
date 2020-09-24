@@ -3,3 +3,6 @@ ASP.NET Core BackgroundWorker. Пример работы с фоновыми з�
 
 # Youtube.com
 [Background works в ASP.NET core 2](https://youtu.be/xPBcztWn2dY)
+
+# Build
+![.NET Core](https://github.com/Calabonga/BackgroundWorkers/workflows/.NET%20Core/badge.svg?branch=master)
