@@ -5,8 +5,6 @@ using System.Linq.Dynamic.Core;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-
-using Calabonga.BackgroundWorker.Api.Core;
 using Calabonga.BackgroundWorker.Api.Entities;
 using Calabonga.BackgroundWorker.Api.Web.Extensions;
 using Calabonga.BackgroundWorker.Api.Web.Infrastructure.EventLogging;

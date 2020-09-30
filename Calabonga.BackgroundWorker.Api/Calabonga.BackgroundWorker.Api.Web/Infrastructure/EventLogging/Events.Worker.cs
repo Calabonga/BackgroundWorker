@@ -1,7 +1,4 @@
 ﻿using System;
-
-using Calabonga.BackgroundWorker.Api.Web.Infrastructure.Working;
-
 using Microsoft.Extensions.Logging;
 
 namespace Calabonga.BackgroundWorker.Api.Web.Infrastructure.EventLogging

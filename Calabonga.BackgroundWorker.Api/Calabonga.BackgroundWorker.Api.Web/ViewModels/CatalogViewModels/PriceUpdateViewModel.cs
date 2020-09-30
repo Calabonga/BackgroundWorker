@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Calabonga.BackgroundWorker.Api.Web.ViewModels.CatalogViewModels
+﻿namespace Calabonga.BackgroundWorker.Api.Web.ViewModels.CatalogViewModels
 {
     /// <summary>
     /// PRice update view model

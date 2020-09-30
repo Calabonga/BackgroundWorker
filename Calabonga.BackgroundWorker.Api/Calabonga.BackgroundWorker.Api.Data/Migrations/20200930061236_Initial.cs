@@ -54,6 +54,37 @@ namespace Calabonga.BackgroundWorker.Api.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Works",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(nullable: false),
+                    Parameters = table.Column<string>(nullable: true),
+                    Dependency = table.Column<string>(nullable: true),
+                    Name = table.Column<string>(nullable: false),
+                    StartAfterMinutes = table.Column<int>(nullable: false),
+                    WorkType = table.Column<int>(nullable: false),
+                    ParentId = table.Column<Guid>(nullable: true),
+                    CreatedAt = table.Column<DateTime>(nullable: false),
+                    ProcessedAt = table.Column<DateTime>(nullable: false),
+                    CompletedAt = table.Column<DateTime>(nullable: true),
+                    CanceledAt = table.Column<DateTime>(nullable: true),
+                    IsDeleteAfterSuccessfulCompleted = table.Column<bool>(nullable: false),
+                    ProcessingResult = table.Column<string>(nullable: true),
+                    ProcessedCount = table.Column<int>(nullable: false),
+                    CancelAfterProcessingCount = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Works", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Works_Works_ParentId",
+                        column: x => x.ParentId,
+                        principalTable: "Works",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "AspNetUsers",
                 columns: table => new
                 {
@@ -267,6 +298,11 @@ namespace Calabonga.BackgroundWorker.Api.Data.Migrations
                 name: "IX_MicroservicePermissions_ApplicationUserProfileId",
                 table: "MicroservicePermissions",
                 column: "ApplicationUserProfileId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Works_ParentId",
+                table: "Works",
+                column: "ParentId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -291,6 +327,9 @@ namespace Calabonga.BackgroundWorker.Api.Data.Migrations
 
             migrationBuilder.DropTable(
                 name: "MicroservicePermissions");
+
+            migrationBuilder.DropTable(
+                name: "Works");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");

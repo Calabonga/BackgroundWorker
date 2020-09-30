@@ -14,20 +14,17 @@ namespace Calabonga.BackgroundWorker.Api.Web.Infrastructure.Services
         private readonly IMemoryCache _cache;
         private readonly TimeSpan _defaultSlidingExpiration = TimeSpan.FromSeconds(60);
 
-        /// <inheritdoc />
         public CacheService(IMemoryCache cache)
         {
             _cache = cache;
         }
 
-        /// <inheritdoc />
         public TEntry Get<TEntry>(object key)
         {
             if (key == null)
             {
                 throw new MicroserviceArgumentNullException(nameof(key));
             }
-
             return _cache.Get<TEntry>(key);
         }
 
@@ -72,7 +69,14 @@ namespace Calabonga.BackgroundWorker.Api.Web.Infrastructure.Services
             _cache.Set(key, cacheEntry, options);
         }
 
-        /// <inheritdoc />
+        /// <summary>
+        /// Returns already exist entry or first put it to the cache and then return entry
+        /// </summary>
+        /// <typeparam name="TEntry"></typeparam>
+        /// <typeparam name="TKey"></typeparam>
+        /// <param name="key"></param>
+        /// <param name="findIfNotFoundFunc"></param>
+        /// <returns></returns>
         public TEntry GetOrCreate<TKey, TEntry>(TKey key, Func<ICacheEntry, TEntry> findIfNotFoundFunc)
         {
             return _cache.GetOrCreate(key, findIfNotFoundFunc);

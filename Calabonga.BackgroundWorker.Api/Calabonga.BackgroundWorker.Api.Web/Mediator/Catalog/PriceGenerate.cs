@@ -3,7 +3,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using Calabonga.AspNetCore.Controllers.Base;
 using Calabonga.BackgroundWorker.Api.Web.Infrastructure.Working;
-using Calabonga.BackgroundWorker.Api.Web.ViewModels.CatalogViewModels;
 using Calabonga.UnitOfWork;
 using MediatR;
 
@@ -33,7 +32,7 @@ namespace Calabonga.BackgroundWorker.Api.Web.Mediator.Catalog
 
         public PriceGenerateRequestHandler(
             IWorkService workService,
-        IWorker worker,
+            IWorker worker,
             IUnitOfWork unitOfWork)
         {
             _workService = workService;

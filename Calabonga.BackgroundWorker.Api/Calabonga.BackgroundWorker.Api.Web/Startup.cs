@@ -1,9 +1,11 @@
 using Calabonga.BackgroundWorker.Api.Web.AppStart.Configures;
 using Calabonga.BackgroundWorker.Api.Web.AppStart.ConfigureServices;
 using Calabonga.BackgroundWorker.Api.Web.Infrastructure.DependencyInjection;
-
+using Calabonga.BackgroundWorker.Api.Web.Infrastructure.Services;
+using Calabonga.BackgroundWorker.Api.Web.Infrastructure.Working;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -35,8 +37,16 @@ namespace Calabonga.BackgroundWorker.Api.Web
             ConfigureServicesSwagger.ConfigureServices(services, Configuration);
             ConfigureServicesCors.ConfigureServices(services, Configuration);
             ConfigureServicesControllers.ConfigureServices(services);
-
+            
             DependencyContainer.Common(services);
+
+            services.AddStackExchangeRedisCache(option =>
+            {
+                option.Configuration = "srv-pnew-03-test";
+                option.InstanceName = "Delivery-Service-Works-Maintenance";
+            });
+
+
         }
         /// <summary>
         /// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -48,6 +58,7 @@ namespace Calabonga.BackgroundWorker.Api.Web
         {
             ConfigureCommon.Configure(app, env, mapper);
             ConfigureEndpoints.Configure(app);
+            WorkerQueue.Instance.SetCache(app.ApplicationServices.GetRequiredService<IDistributedCacheService>());
         }
     }
 }

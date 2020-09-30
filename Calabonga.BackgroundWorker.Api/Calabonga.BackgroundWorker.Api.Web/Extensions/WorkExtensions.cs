@@ -1,6 +1,5 @@
 ﻿using System.Linq;
 using Calabonga.BackgroundWorker.Api.Entities;
-using Calabonga.BackgroundWorker.Api.Web.Infrastructure.Helpers;
 
 namespace Calabonga.BackgroundWorker.Api.Web.Extensions
 {

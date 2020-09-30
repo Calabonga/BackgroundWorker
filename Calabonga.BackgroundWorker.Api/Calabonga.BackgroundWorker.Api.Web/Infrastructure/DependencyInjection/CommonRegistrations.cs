@@ -27,6 +27,7 @@ namespace Calabonga.BackgroundWorker.Api.Web.Infrastructure.DependencyInjection
             services.AddTransient<IAccountService, AccountService>();
             services.AddTransient<IProfileService, IdentityProfileService>();
             services.AddTransient<ICacheService, CacheService>();
+            services.AddTransient<IDistributedCacheService, DistributedCacheService>();
             services.AddTransient<ICorsPolicyService, IdentityServerCorsPolicy>();
 
             services.AddTransient<IWorkService, Worker>();

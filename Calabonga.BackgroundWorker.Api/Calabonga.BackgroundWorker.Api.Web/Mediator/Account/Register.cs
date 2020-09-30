@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Calabonga.AspNetCore.Controllers.Base;
 using Calabonga.BackgroundWorker.Api.Web.Infrastructure.Services;
 using Calabonga.BackgroundWorker.Api.Web.ViewModels.AccountViewModels;
-using Calabonga.OperationResultsCore;
+using Calabonga.OperationResults;
 
 namespace Calabonga.BackgroundWorker.Api.Web.Mediator.Account
 {

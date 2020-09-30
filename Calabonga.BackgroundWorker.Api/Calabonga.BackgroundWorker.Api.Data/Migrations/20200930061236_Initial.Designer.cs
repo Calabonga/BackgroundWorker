@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Calabonga.BackgroundWorker.Api.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20200918015657_Initial")]
+    [Migration("20200930061236_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -198,6 +198,62 @@ namespace Calabonga.BackgroundWorker.Api.Data.Migrations
                     b.ToTable("MicroservicePermissions");
                 });
 
+            modelBuilder.Entity("Calabonga.BackgroundWorker.Api.Entities.Work", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("CancelAfterProcessingCount")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("CanceledAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("CompletedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Dependency")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsDeleteAfterSuccessfulCompleted")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Parameters")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid?>("ParentId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("ProcessedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("ProcessedCount")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ProcessingResult")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("StartAfterMinutes")
+                        .HasColumnType("int");
+
+                    b.Property<int>("WorkType")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ParentId");
+
+                    b.ToTable("Works");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<System.Guid>", b =>
                 {
                     b.Property<int>("Id")
@@ -344,6 +400,13 @@ namespace Calabonga.BackgroundWorker.Api.Data.Migrations
                         .HasForeignKey("ApplicationUserProfileId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("Calabonga.BackgroundWorker.Api.Entities.Work", b =>
+                {
+                    b.HasOne("Calabonga.BackgroundWorker.Api.Entities.Work", "Parent")
+                        .WithMany("Children")
+                        .HasForeignKey("ParentId");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<System.Guid>", b =>

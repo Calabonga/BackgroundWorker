@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using Calabonga.AspNetCore.Controllers.Base;
 using Calabonga.BackgroundWorker.Api.Web.Infrastructure.Working;
 using Calabonga.BackgroundWorker.Api.Web.ViewModels.CatalogViewModels;
-using Calabonga.OperationResultsCore;
+using Calabonga.OperationResults;
 using Calabonga.UnitOfWork;
 
 namespace Calabonga.BackgroundWorker.Api.Web.Mediator.Catalog

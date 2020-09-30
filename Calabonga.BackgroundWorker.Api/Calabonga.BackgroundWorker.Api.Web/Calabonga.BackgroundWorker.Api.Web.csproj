@@ -4,6 +4,7 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <Nullable>enable</Nullable>
     <LangVersion>8.0</LangVersion>
+    <UserSecretsId>499a314b-1d64-464f-a7fc-80c6b615eba5</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
@@ -16,12 +17,12 @@
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="10.0.0" />
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="8.0.1" />
-    <PackageReference Include="Calabonga.AspNetCore.Controllers" Version="1.1.0" />
-    <PackageReference Include="Calabonga.Microservices.BackgroundWorkers" Version="1.0.1" />
-    <PackageReference Include="Calabonga.Microservices.Core" Version="2.1.2" />
+    <PackageReference Include="Calabonga.AspNetCore.Controllers" Version="1.1.1" />
+    <PackageReference Include="Calabonga.Microservices.BackgroundWorkers" Version="1.0.2" />
+    <PackageReference Include="Calabonga.Microservices.Core" Version="2.1.3" />
     <PackageReference Include="Calabonga.Microservices.Web.Core" Version="2.0.2" />
-    <PackageReference Include="FluentValidation" Version="9.2.0" />
-    <PackageReference Include="GitInfo" Version="2.0.34">
+    <PackageReference Include="FluentValidation" Version="9.2.2" />
+    <PackageReference Include="GitInfo" Version="2.1.2">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
@@ -33,10 +34,11 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Swashbuckle.AspNetCore" Version="5.6.1" />
-    <PackageReference Include="Swashbuckle.AspNetCore.Swagger" Version="5.6.1" />
-    <PackageReference Include="Swashbuckle.AspNetCore.SwaggerGen" Version="5.6.1" />
-    <PackageReference Include="Swashbuckle.AspNetCore.SwaggerUi" Version="5.6.1" />
+    <PackageReference Include="Microsoft.Extensions.Caching.StackExchangeRedis" Version="3.1.8" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="5.6.3" />
+    <PackageReference Include="Swashbuckle.AspNetCore.Swagger" Version="5.6.3" />
+    <PackageReference Include="Swashbuckle.AspNetCore.SwaggerGen" Version="5.6.3" />
+    <PackageReference Include="Swashbuckle.AspNetCore.SwaggerUi" Version="5.6.3" />
     <PackageReference Include="System.Linq.Dynamic.Core" Version="1.2.2" />
   </ItemGroup>
 

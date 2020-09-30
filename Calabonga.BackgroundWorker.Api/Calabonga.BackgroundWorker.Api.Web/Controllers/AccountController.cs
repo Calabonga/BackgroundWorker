@@ -2,8 +2,7 @@
 
 using Calabonga.BackgroundWorker.Api.Web.Mediator.Account;
 using Calabonga.BackgroundWorker.Api.Web.ViewModels.AccountViewModels;
-using Calabonga.OperationResultsCore;
-
+using Calabonga.OperationResults;
 using MediatR;
 
 using Microsoft.AspNetCore.Authorization;

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Calabonga.BackgroundWorker.Api.Data;
 using Calabonga.BackgroundWorker.Api.Web.ViewModels.AccountViewModels;
 using Calabonga.Microservices.Core.Validators;
-using Calabonga.OperationResultsCore;
+using Calabonga.OperationResults;
 
 namespace Calabonga.BackgroundWorker.Api.Web.Infrastructure.Services
 {

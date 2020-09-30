@@ -1,6 +1,11 @@
 ﻿using System;
 using System.Collections.Concurrent;
+
 using Calabonga.BackgroundWorker.Api.Entities;
+using Calabonga.BackgroundWorker.Api.Web.Infrastructure.Services;
+
+using Microsoft.Extensions.Caching.Distributed;
+
 
 namespace Calabonga.BackgroundWorker.Api.Web.Infrastructure.Working
 {
@@ -10,6 +15,7 @@ namespace Calabonga.BackgroundWorker.Api.Web.Infrastructure.Working
     public sealed class WorkerQueue
     {
         private readonly ConcurrentDictionary<Guid, Work> _queue = new ConcurrentDictionary<Guid, Work>();
+        private IDistributedCacheService? _cache;
 
         #region Singleton
 
@@ -22,6 +28,11 @@ namespace Calabonga.BackgroundWorker.Api.Web.Infrastructure.Working
         /// </summary>
         public static WorkerQueue Instance => Lazy.Value;
 
+        public void SetCache(IDistributedCacheService cache)
+        {
+            _cache = cache;
+        }
+
         #endregion
 
         /// <summary>
@@ -31,9 +42,18 @@ namespace Calabonga.BackgroundWorker.Api.Web.Infrastructure.Working
         /// <param name="key"></param>
         /// <param name="value"></param>
         /// <returns></returns>
-        public bool Add(Guid key, Work value)
+        public void Add(Guid key, Work value)
         {
-            return _queue.TryAdd(key, value);
+            if (_cache == null)
+            {
+                _queue.TryAdd(key, value);
+                return;
+            }
+
+            _cache.GetOrCreate(key.ToString(), new DistributedCacheEntryOptions
+            {
+                AbsoluteExpirationRelativeToNow = TimeSpan.FromHours(1)
+            }, () => value);
         }
 
         /// <summary>
@@ -42,7 +62,11 @@ namespace Calabonga.BackgroundWorker.Api.Web.Infrastructure.Working
         /// <param name="key"></param>
         public bool HasKey(Guid key)
         {
-            return _queue.ContainsKey(key);
+            if (_cache == null)
+            {
+                return _queue.ContainsKey(key);
+            }
+            return _cache.HasKey(key.ToString());
         }
 
         /// <summary>
@@ -50,9 +74,17 @@ namespace Calabonga.BackgroundWorker.Api.Web.Infrastructure.Working
         /// </summary>
         /// <param name="key"></param>
         /// <returns></returns>
-        public bool Remove(Guid key)
+        public void Remove(Guid key)
         {
-            return HasKey(key) && _queue.TryRemove(key, out _);
+            if (_cache == null)
+            {
+                if (HasKey(key))
+                {
+                    _queue.TryRemove(key, out _);
+                }
+                return;
+            }
+            _cache.Remove(key.ToString());
         }
     }
 }
