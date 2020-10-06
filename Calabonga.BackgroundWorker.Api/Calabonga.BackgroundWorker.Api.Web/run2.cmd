@@ -1,0 +1,1 @@
+dotnet run --no-build d:\Projects\_TEMP\BackgroundWorker\Calabonga.BackgroundWorker.Api\Calabonga.BackgroundWorker.Api.Web\bin\Debug\netcoreapp3.1\Calabonga.BackgroundWorker.Api.Web.dll dotnet run --urls="http://localhost:10002"

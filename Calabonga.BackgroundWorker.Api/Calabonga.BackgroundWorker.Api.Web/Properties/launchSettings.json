@@ -1,31 +1,13 @@
 {
-    "profiles": {
-        "Development": {
-            "commandName": "Project",
-            "launchBrowser": true,
-            "launchUrl": "api/manual",
-            "environmentVariables": {
-                "ASPNETCORE_ENVIRONMENT": "Development"
-            },
-            "applicationUrl": "http://localhost:10001"
-        },
-        "Development1": {
-            "commandName": "Project",
-            "launchBrowser": true,
-            "launchUrl": "api/manual",
-            "environmentVariables": {
-                "ASPNETCORE_ENVIRONMENT": "Development"
-            },
-            "applicationUrl": "http://localhost:10002"
-        },
-        "Development2": {
-            "commandName": "Project",
-            "launchBrowser": true,
-            "launchUrl": "api/manual",
-            "environmentVariables": {
-                "ASPNETCORE_ENVIRONMENT": "Development"
-            },
-            "applicationUrl": "http://localhost:10003"
-        }
+  "profiles": {
+    "Development": {
+      "commandName": "Project",
+      "launchBrowser": true,
+      "launchUrl": "api/manual",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "applicationUrl": "http://localhost:10001"
     }
+  }
 }
