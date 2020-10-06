@@ -40,11 +40,12 @@ namespace Calabonga.BackgroundWorker.Api.Web
             
             DependencyContainer.Common(services);
 
-            services.AddStackExchangeRedisCache(option =>
-            {
-                option.Configuration = "srv-pnew-03-test";
-                option.InstanceName = "Delivery-Service-Works-Maintenance";
-            });
+            // If redis enabled uncomment this settings
+            //services.AddStackExchangeRedisCache(option =>
+            //{
+            //    option.Configuration = "localhost";
+            //    option.InstanceName = "Works-Maintenance";
+            //});
 
 
         }

@@ -62,11 +62,7 @@ namespace Calabonga.BackgroundWorker.Api.Web.Infrastructure.Working
         /// <param name="key"></param>
         public bool HasKey(Guid key)
         {
-            if (_cache == null)
-            {
-                return _queue.ContainsKey(key);
-            }
-            return _cache.HasKey(key.ToString());
+            return _cache?.HasKey(key.ToString()) ?? _queue.ContainsKey(key);
         }
 
         /// <summary>
