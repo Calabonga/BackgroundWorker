@@ -23,9 +23,9 @@ namespace Calabonga.BackgroundWorker.Api.Web.Infrastructure.HostedServices
             return worker.AppendWorkDownloadRatesAsync(token);
         }
 
-        protected override string Schedule => "*/10 * * * 1-5";
+        protected override string Schedule => "0 0 * * *";
 
-        protected override string DisplayName => "At minute 0 past every 12th hour on every day-of-week from Monday through Friday.";
+        protected override string DisplayName => "At minute 0:00 every day";
 
         protected override bool IsExecuteOnServerRestart => false;
     }

@@ -18,16 +18,13 @@ namespace Calabonga.BackgroundWorker.Api.Web.Infrastructure.Working
     public class WorkerProcessor : IWorkerProcessor
     {
         public WorkerProcessor(
-            IMediator mediator,
             ILogger<WorkerProcessor> logger,
             IWorkService workService)
         {
-            _mediator = mediator;
             _logger = logger;
             _workService = workService;
         }
 
-        private readonly IMediator _mediator;
         private readonly ILogger<WorkerProcessor> _logger;
         private readonly IWorkService _workService;
 

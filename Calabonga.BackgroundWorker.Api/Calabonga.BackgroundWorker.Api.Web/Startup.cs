@@ -46,9 +46,8 @@ namespace Calabonga.BackgroundWorker.Api.Web
             //    option.Configuration = "localhost";
             //    option.InstanceName = "Works-Maintenance";
             //});
-
-
         }
+
         /// <summary>
         /// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         /// </summary>
