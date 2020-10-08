@@ -1,4 +1,5 @@
 ﻿using System;
+
 using Microsoft.Extensions.Logging;
 
 namespace Calabonga.BackgroundWorker.Api.Web.Infrastructure.EventLogging
@@ -187,11 +188,25 @@ namespace Calabonga.BackgroundWorker.Api.Web.Infrastructure.EventLogging
                 EventIdHelper.CreateWorkForWorkerId,
                 "Work of type {WorkType} with ID [{Id}] successfully created");
 
+        private static readonly Action<ILogger, Exception?> CreateWorkForWorkerExecuteFailed =
+            LoggerMessage.Define(
+                LogLevel.Error,
+                EventIdHelper.CreateWorkForWorkerId,
+                "Work of type {WorkType} with ID [{Id}] successfully created");
+
         public static void CreateWorkForWorker(ILogger logger, string workType, string id, Exception? exception = null)
         {
             if (logger.IsEnabled(LogLevel.Debug))
             {
-                CreateWorkForWorkerExecute(logger, workType, id, exception);
+                if (exception == null)
+                {
+
+                    CreateWorkForWorkerExecute(logger, workType, id, exception);
+                }
+                else
+                {
+                    CreateWorkForWorkerExecuteFailed(logger, exception);
+                }
             }
         }
 
