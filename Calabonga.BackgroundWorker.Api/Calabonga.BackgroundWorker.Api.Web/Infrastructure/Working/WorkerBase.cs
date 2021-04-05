@@ -48,8 +48,7 @@ namespace Calabonga.BackgroundWorker.Api.Web.Infrastructure.Working
         public IEnumerable<Work>GetRootWorks()
         {
             return UnitOfWork.GetRepository<Work>()
-                .GetAll()
-                .AsNoTracking()
+                .GetAll(true)
                 .ToList()
                 .OrderBy(x => x.CreatedAt)
                 .Where(x => x.CompletedAt == null && x.CanceledAt == null && x.ParentId == null && string.IsNullOrEmpty(x.Dependency));
@@ -62,8 +61,7 @@ namespace Calabonga.BackgroundWorker.Api.Web.Infrastructure.Working
         public IEnumerable<Work> GetWorksWithTypeTypeDependency()
         {
             var worksWithDependencies = UnitOfWork.GetRepository<Work>()
-                .GetAll()
-                .AsNoTracking()
+                .GetAll(true)
                 .ToList()
                 .OrderBy(x => x.CreatedAt)
                 .Where(x => x.CompletedAt == null && x.CanceledAt == null && !string.IsNullOrEmpty(x.Dependency))
@@ -79,8 +77,7 @@ namespace Calabonga.BackgroundWorker.Api.Web.Infrastructure.Working
             {
                 var dependency = work.Dependency;
                 var any = UnitOfWork.GetRepository<Work>()
-                    .GetAll()
-                    .AsNoTracking()
+                    .GetAll(true)
                     .Where(dependency)
                     .ToList()
                     .Any();
@@ -101,8 +98,7 @@ namespace Calabonga.BackgroundWorker.Api.Web.Infrastructure.Working
         public IEnumerable<Work> GetChildrenForCompletedWorks()
         {
             return UnitOfWork.GetRepository<Work>()
-                .GetAll()
-                .AsNoTracking()
+                .GetAll(true)
                 .Include(x => x.Parent)
                 .ToList()
                 .OrderBy(x => x.CreatedAt)
@@ -206,7 +202,7 @@ namespace Calabonga.BackgroundWorker.Api.Web.Infrastructure.Working
         /// <returns></returns>
         private async Task UpdateWorkAsync(CancellationToken cancellationToken, Guid workId, Exception? exception)
         {
-            var work = await UnitOfWork.GetRepository<Work>().GetAll().SingleOrDefaultAsync(x=>x.Id == workId, cancellationToken);
+            var work = await UnitOfWork.GetRepository<Work>().GetAll(true).SingleOrDefaultAsync(x=>x.Id == workId, cancellationToken);
             if (work == null)
             {
                 Events.WorkByIdNotFound(Logger, workId.ToString(), new MicroserviceNotFoundException($"Work {workId} not found"));

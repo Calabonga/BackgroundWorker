@@ -1,13 +1,13 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <TargetFramework>net5.0</TargetFramework>
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Calabonga.AspNetCore.Controllers" Version="1.1.1" />
-    <PackageReference Include="Calabonga.EntityFrameworkCore.Entities.Base" Version="2.1.0" />
+    <PackageReference Include="Calabonga.AspNetCore.Controllers" Version="3.0.0" />
+    <PackageReference Include="Calabonga.EntityFrameworkCore.Entities.Base" Version="3.0.1" />
   </ItemGroup>
 
   <ItemGroup>

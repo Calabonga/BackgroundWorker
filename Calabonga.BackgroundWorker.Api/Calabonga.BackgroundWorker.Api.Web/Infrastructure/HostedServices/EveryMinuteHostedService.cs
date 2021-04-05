@@ -10,7 +10,7 @@ using Microsoft.Extensions.Logging;
 
 namespace Calabonga.BackgroundWorker.Api.Web.Infrastructure.HostedServices
 {
-    public class EveryMinuteHostedService : CrontabScheduledBackgroundHostedService
+    public class EveryMinuteHostedService : ScheduledHostedServiceBase
     {
         public EveryMinuteHostedService(IServiceScopeFactory serviceScopeFactory, ILogger<EveryMinuteHostedService> logger) 
             : base(serviceScopeFactory, logger)

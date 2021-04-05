@@ -10,7 +10,7 @@ using Microsoft.Extensions.Logging;
 
 namespace Calabonga.BackgroundWorker.Api.Web.Infrastructure.HostedServices
 {
-    public class RateUpdateHostedService : CrontabScheduledBackgroundHostedService
+    public class RateUpdateHostedService : ScheduledHostedServiceBase
     {
         public RateUpdateHostedService(IServiceScopeFactory serviceScopeFactory, ILogger<RateUpdateHostedService> logger) 
             : base(serviceScopeFactory, logger)

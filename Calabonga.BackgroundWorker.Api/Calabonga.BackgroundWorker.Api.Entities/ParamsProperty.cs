@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json;
-using Calabonga.AspNetCore.Controllers.Context;
 using Calabonga.EntityFrameworkCore.Entities.Base;
 using Calabonga.Microservices.Core.Exceptions;
 
